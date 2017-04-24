@@ -1,45 +1,16 @@
+import java.util.HashMap;
+
+import spark.ModelAndView;
+import spark.template.velocity.VelocityTemplateEngine;
+
 import static spark.Spark.*;
 
 public class App {
 	public static void main(String[] args) {
 
 		staticFileLocation("/public");
-		get("/", (request, response) ->
-		"Hello Friend!"+
-		"<!DOCTYPE html>" +
-         "<html>" +
-         "<head>" +
-           "<title>Hello Friend!</title>" +
-           "<link rel='stylesheet' + href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>" +
-         "</head>" +
-        "<body>" +
-           "<h1>Hello From Afar</h1>" +
-           "<p>Dear Friend,</p>" +
-           "<p>How are you? I hope that you are having a nice weekend. I'm vacationing in the Iceland while I learn programming! </p>" +
-           "<p>Friend, you would not believe how cold it is here. I should have gone to Hawaii instead.</p>" +
-           "<p>But I like programming a lot, so I've got that going for me. </p>" +
-           "<p>Looking forward to seeing you soon. I'll bring you back a souvenir. </p>" +
-           "<p>Cheers,</p>" +
-           "<p>Travel Enthusiast Jane</p>" +
-					 "<p><a href='/favorite_photos'>Please check my favourite photos</a> </p>" +
-         "</body>" +
-       "</html>");
+		get("/", (request, response) -> {return new ModelAndView(new HashMap(), "templates/hello.vtl");}, new VelocityTemplateEngine());
 
-			 get("/favorite_photos", (request, response) ->
-    "<!DOCTYPE html>" +
-      "<html>" +
-      "<head>" +
-        "<title>Hello Friend!</title>" +
-        "<link rel='stylesheet'  href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>" +
-      "</head>" +
-      "<body>" +
-       "<h1>Favorite Traveling Photos</h1>" +
-          "<ul>" +
-            "<li><img src='/images/bustle.png' alt='A photo of a mountain.' style='height:200px; width: 300px;'/></li>" +
-            "<li><img src='/images/bustle.png' alt='A photo of a a rocky beach.' style='height:200px; width: 300px;'/></li>" +
-          "</ul>" +
-      "</body>" +
-      "</html>"
-    );
+			 get("/favorite_photos", (request, response) -> {return new ModelAndView(new HashMap(), "templates/favorite_photos.vtl");}, new VelocityTemplateEngine());
 	}
 }
